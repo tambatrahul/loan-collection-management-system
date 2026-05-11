@@ -4,6 +4,7 @@ namespace App\Modules\Collection\Services\V1;
 
 use App\Modules\Collection\BO\CreateCollectionBO;
 use App\Modules\Collection\BO\FetchCollectionBO;
+use App\Modules\Collection\BO\UpdateCollectionBO;
 use App\Modules\Collection\Interfaces\Repositories\CollectionRepositoryInterface;
 use App\Modules\Collection\Interfaces\Services\CollectionServiceInterface;
 use App\Modules\Collection\Models\Collection;
@@ -39,5 +40,21 @@ final class CollectionService implements CollectionServiceInterface
     public function find(int $id): Collection
     {
         return $this->collectionRepository->findOrFail($id);
+    }
+
+    public function update(int $id, UpdateCollectionBO $bo): Collection {
+        $collection = $this->collectionRepository->findOrFail($id);
+
+        return $this->collectionRepository->update(
+            $collection,
+            $bo->toArray()
+        );
+    }
+
+    public function delete(int $id): void
+    {
+        $collection = $this->collectionRepository->findOrFail($id);
+
+        $this->collectionRepository->delete($collection);
     }
 }

@@ -5,8 +5,10 @@ namespace App\Modules\Collection\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Modules\Collection\BO\CreateCollectionBO;
 use App\Modules\Collection\BO\FetchCollectionBO;
+use App\Modules\Collection\BO\UpdateCollectionBO;
 use App\Modules\Collection\Http\Requests\CreateCollectionRequest;
 use App\Modules\Collection\Http\Requests\FetchCollectionRequest;
+use App\Modules\Collection\Http\Requests\UpdateCollectionRequest;
 use App\Modules\Collection\Http\Resources\CollectionResource;
 use App\Modules\Collection\Interfaces\Services\CollectionServiceInterface;
 use App\Support\PaginationHelper;
@@ -77,6 +79,49 @@ final class CollectionController extends Controller
         return RestResponse::success(
             data: new CollectionResource($collection),
             message: 'Collection fetched successfully.'
+        );
+    }
+
+    /**
+     * Update the specified collection.
+     */
+    public function update(
+        UpdateCollectionRequest $request,
+        int $id
+    ): JsonResponse {
+        /** @var \App\Modules\Auth\Models\User $user */
+        $user = $request->user();
+
+        $validated = $request->validated();
+
+        $bo = new UpdateCollectionBO(
+            loanId: (int) $validated['loan_id'],
+            amountPaid: (float) $validated['amount_paid'],
+            paymentMode: $validated['payment_mode'],
+            location: $validated['location'] ?? null,
+            collectedAt: $validated['collected_at'],
+            collectedBy: (int) $user->id,
+        );
+
+        $collection = $this->collectionService->update($id, $bo);
+
+        $collection->load(['loan', 'collector']);
+
+        return RestResponse::success(
+            data: new CollectionResource($collection),
+            message: 'Collection updated successfully.'
+        );
+    }
+
+    /**
+     * Remove the specified collection.
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $this->collectionService->delete($id);
+
+        return RestResponse::success(
+            message: 'Collection deleted successfully.'
         );
     }
 }

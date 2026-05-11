@@ -26,8 +26,8 @@ final class CollectionRepository implements CollectionRepositoryInterface
     {
         return Collection::query()
             ->with(['loan', 'collector'])
-            ->when($bo->loanId, fn ($q) => $q->where('loan_id', $bo->loanId))
-            ->when($bo->paymentMode, fn ($q) => $q->where('payment_mode', $bo->paymentMode))
+            ->when($bo->loanId, fn($q) => $q->where('loan_id', $bo->loanId))
+            ->when($bo->paymentMode, fn($q) => $q->where('payment_mode', $bo->paymentMode))
             ->latest('collected_at')
             ->paginate($perPage);
     }
@@ -37,5 +37,17 @@ final class CollectionRepository implements CollectionRepositoryInterface
         return Collection::query()
             ->with(['loan', 'collector'])
             ->findOrFail($id);
+    }
+
+    public function update($collection, array $data)
+    {
+        $collection->update($data);
+
+        return $collection->fresh();
+    }
+
+    public function delete($collection): void
+    {
+        $collection->delete();
     }
 }

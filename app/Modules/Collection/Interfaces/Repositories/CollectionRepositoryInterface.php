@@ -14,4 +14,8 @@ interface CollectionRepositoryInterface
     public function paginate(FetchCollectionBO $bo, int $perPage): LengthAwarePaginator;
 
     public function findOrFail(int $id): Collection;
+
+    public function update($collection, array $data);
+
+    public function delete($collection): void;
 }
