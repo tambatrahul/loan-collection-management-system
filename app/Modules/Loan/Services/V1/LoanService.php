@@ -18,6 +18,14 @@ final class LoanService implements LoanServiceInterface
 
     public function create(CreateLoanBO $bo): Loan
     {
+        $count = $this->loanRepository->getTodayLoanCount() + 1;
+
+        $bo->loanNo = sprintf(
+            'LN-%s-%04d',
+            now()->format('Ymd'),
+            $count
+        );
+
         return $this->loanRepository->create($bo);
     }
 

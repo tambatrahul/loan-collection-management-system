@@ -22,6 +22,13 @@ final class LoanRepository implements LoanRepositoryInterface
         ]);
     }
 
+    public function getTodayLoanCount(): int
+    {
+        return Loan::query()
+            ->whereDate('created_at', today())
+            ->count();
+    }
+
     public function paginate(FetchLoanBO $bo, int $perPage): LengthAwarePaginator
     {
         return Loan::query()

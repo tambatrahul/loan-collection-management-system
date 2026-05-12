@@ -12,6 +12,8 @@ interface LoanRepositoryInterface
 {
     public function create(CreateLoanBO $bo): Loan;
 
+    public function getTodayLoanCount(): int;
+
     public function paginate(FetchLoanBO $bo, int $perPage): LengthAwarePaginator;
 
     public function findOrFail(int $id): Loan;

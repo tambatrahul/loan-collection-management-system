@@ -27,7 +27,6 @@ final class LoanController extends Controller
     public function index(FetchLoanRequest $request): JsonResponse
     {
         $bo = new FetchLoanBO(
-            loanNo: $request->validated('loan_no'),
             customerName: $request->validated('customer_name'),
             mobile: $request->validated('mobile'),
             status: $request->validated('status'),
@@ -53,7 +52,7 @@ final class LoanController extends Controller
         $user = $request->user();
 
         $bo = new CreateLoanBO(
-            loanNo: $request->validated('loan_no'),
+            loanNo: $this->generateLoanNumber(),
             customerId: (int) $request->validated('customer_id'),
             emiAmount: (float) $request->validated('emi_amount'),
             totalAmount: (float) $request->validated('total_amount'),

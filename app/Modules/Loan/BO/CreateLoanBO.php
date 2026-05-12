@@ -2,13 +2,13 @@
 
 namespace App\Modules\Loan\BO;
 
-final readonly class CreateLoanBO
+final class CreateLoanBO
 {
     public function __construct(
-        public string $loanNo,
-        public int $customerId,
-        public float $emiAmount,
-        public float $totalAmount,
-        public int $createdBy,
+        public ?string $loanNo,
+        public readonly int $customerId,
+        public readonly float $emiAmount,
+        public readonly float $totalAmount,
+        public readonly int $createdBy,
     ) {}
 }
