@@ -14,6 +14,7 @@ final class CollectionResource extends JsonResource
             'loan' => [
                 'id' => $this->loan->id,
                 'loan_no' => $this->loan->loan_no,
+                'customer_name' => $this->loan->customer->name
             ],
             'amount_paid' => $this->amount_paid,
             'payment_mode' => $this->payment_mode,

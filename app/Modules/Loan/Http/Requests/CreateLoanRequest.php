@@ -14,7 +14,6 @@ final class CreateLoanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loan_no' => ['required', 'string', 'max:50', 'unique:loans,loan_no'],
             'customer_id' => ['required', 'integer', 'exists:customers,id'],
             'emi_amount' => ['required', 'numeric', 'gt:0'],
             'total_amount' => ['required', 'numeric', 'gte:emi_amount'],

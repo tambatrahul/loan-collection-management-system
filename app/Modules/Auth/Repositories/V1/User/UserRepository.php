@@ -11,7 +11,7 @@ class UserRepository
     {
         return User::query()
             ->where('role', 'agent')
-            ->select('id', 'name', 'email')
+            ->select('id', 'name', 'email', 'role')
             ->orderBy('name')
             ->get();
     }

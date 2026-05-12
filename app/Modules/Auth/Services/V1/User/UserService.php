@@ -3,7 +3,7 @@
 namespace App\Modules\Auth\Services\V1\User;
 
 use App\Modules\Auth\Interfaces\Services\UserServiceInterface;
-use App\Modules\Auth\Repositories\UserRepository;
+use App\Modules\Auth\Repositories\V1\User\UserRepository;
 use Illuminate\Support\Collection;
 
 class UserService implements UserServiceInterface
