@@ -12,9 +12,3 @@ Route::prefix('auth')->group(function (): void {
         Route::get('/me', [AuthController::class, 'me']);
     });
 });
-
-Route::prefix('users')->group(function (): void {
-    Route::middleware('auth:sanctum')->group(function (): void {
-        Route::get('/', [UserController::class, 'agents']);
-    });
-});
