@@ -24,7 +24,12 @@ final class UserRepository implements UserRepositoryInterface
     }
     public function paginate(FetchUserBO $bo, int $perPage): LengthAwarePaginator
     {
-        $query = User::query()->latest();
+        $query = User::query()
+        ->when(
+            $bo->userId !== null,
+            fn ($q) => $q->where('id', $bo->userId)
+        )
+        ->latest();
 
         $this->applyFilters($query, $bo);
 

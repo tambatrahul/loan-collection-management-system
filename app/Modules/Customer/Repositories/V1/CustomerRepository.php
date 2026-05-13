@@ -20,9 +20,14 @@ final class CustomerRepository implements CustomerRepositoryInterface
         ]);
     }
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator
+    public function paginate(?int $userId = null, int $perPage = 15): LengthAwarePaginator
     {
         return Customer::query()
+            ->with('assignedAgent')
+            ->when(
+                $userId !== null,
+                fn ($query) => $query->where('assigned_to', $userId)
+            )
             ->latest('id')
             ->paginate($perPage);
     }

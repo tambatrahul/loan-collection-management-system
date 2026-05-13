@@ -13,7 +13,7 @@ interface CustomerRepositoryInterface
 {
     public function create(CreateCustomerBO $bo): Customer;
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator;
+    public function paginate(?int $userId, int $perPage = 15): LengthAwarePaginator;
 
     public function findOrFail(int $id): Customer;
 

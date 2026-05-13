@@ -24,16 +24,22 @@ class LoanFactory extends Factory
      */
     public function definition(): array
     {
+        static $count = 1;
+
         $totalAmount = fake()->numberBetween(10000, 100000);
         $emiAmount = fake()->numberBetween(1000, 10000);
 
         return [
-            'loan_no' => 'LN' . fake()->unique()->numerify('#####'),
+            'loan_no' => sprintf(
+                'LN-%s-%04d',
+                now()->format('Ymd'),
+                $count++
+            ),
             'customer_id' => Customer::factory(),
             'emi_amount' => $emiAmount,
             'total_amount' => $totalAmount,
             'status' => 'active',
-            'created_by' => User::factory()
+            'created_by' => User::factory(),
         ];
     }
 }

@@ -20,9 +20,9 @@ final class CustomerService implements CustomerServiceInterface
         return $this->customerRepository->create($bo);
     }
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator
+    public function paginate(?int $userId = null, int $perPage = 15): LengthAwarePaginator
     {
-        return $this->customerRepository->paginate($perPage);
+        return $this->customerRepository->paginate($userId, $perPage);
     }
 
     public function find(int $id): Customer

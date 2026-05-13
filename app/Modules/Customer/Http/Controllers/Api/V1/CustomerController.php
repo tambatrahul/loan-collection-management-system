@@ -25,7 +25,13 @@ final class CustomerController extends Controller
     {
         $perPage = PaginationHelper::getPerPage($request);
 
-        $customers = $this->customerService->paginate($perPage);
+        $user = $request->user();
+
+        $userId = $user->role->name === 'ADMIN'
+            ? null
+            : $user->id;
+
+        $customers = $this->customerService->paginate($userId, $perPage);
 
         return RestResponse::paginated(
             paginator: $customers,

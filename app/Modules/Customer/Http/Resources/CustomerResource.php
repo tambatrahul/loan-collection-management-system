@@ -16,6 +16,8 @@ final class CustomerResource extends JsonResource
             'name' => $this->name,
             'mobile' => $this->mobile,
             'address' => $this->address,
+            'assigned_to' => $this->assigned_to,
+            'assigned_agent_name' => $this->assignedAgent?->name,
             'created_at' => $this->created_at?->toDateTimeString(),
         ];
     }

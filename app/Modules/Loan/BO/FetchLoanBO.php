@@ -9,5 +9,6 @@ final readonly class FetchLoanBO
         public ?string $customerName = null,
         public ?string $mobile = null,
         public ?string $status = null,
+        public readonly ?int $assignedTo = null,
     ) {}
 }

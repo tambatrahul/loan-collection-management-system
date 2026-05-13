@@ -26,9 +26,14 @@ final class CollectionController extends Controller
      */
     public function index(FetchCollectionRequest $request): JsonResponse
     {
+        $user = $request->user();
+
+        $collectedBy = $user->role->name === 'ADMIN' ? null : $user->id;
+
         $bo = new FetchCollectionBO(
             loanId: $request->validated('loan_id'),
             paymentMode: $request->validated('payment_mode'),
+            collectedBy: $collectedBy,
         );
 
         $perPage = PaginationHelper::getPerPage($request);

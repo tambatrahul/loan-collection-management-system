@@ -26,10 +26,14 @@ final class UserController extends Controller
      */
     public function index(FetchUserRequest $request): JsonResponse
     {
+        $user = $request->user();
+        $userId = $user->role->name === 'ADMIN' ? null : $user->id;
+
         $bo = new FetchUserBO(
             name: $request->validated('name'),
             email: $request->validated('email'),
             role: $request->validated('role'),
+            userId: $userId,
         );
 
         $perPage = PaginationHelper::getPerPage($request);

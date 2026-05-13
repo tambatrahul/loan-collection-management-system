@@ -29,13 +29,27 @@ final class LoanRepository implements LoanRepositoryInterface
             ->count();
     }
 
+    // LoanRepository.php
     public function paginate(FetchLoanBO $bo, int $perPage): LengthAwarePaginator
     {
         return Loan::query()
             ->with('customer')
             ->withSum('collections', 'amount_paid')
-            ->when($bo->loanNo, fn ($q) => $q->where('loan_no', 'like', "%{$bo->loanNo}%"))
-            ->when($bo->status, fn ($q) => $q->where('status', $bo->status))
+            ->when(
+                $bo->assignedTo !== null,
+                fn($q) => $q->whereHas(
+                    'customer',
+                    fn($sub) => $sub->where('assigned_to', $bo->assignedTo)
+                )
+            )
+            ->when(
+                $bo->loanNo,
+                fn($q) => $q->where('loan_no', 'like', "%{$bo->loanNo}%")
+            )
+            ->when(
+                $bo->status,
+                fn($q) => $q->where('status', $bo->status)
+            )
             ->when($bo->customerName, function ($q) use ($bo) {
                 $q->whereHas('customer', function ($sub) use ($bo) {
                     $sub->where('name', 'like', "%{$bo->customerName}%");

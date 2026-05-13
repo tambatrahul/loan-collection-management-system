@@ -26,6 +26,7 @@ final class CollectionRepository implements CollectionRepositoryInterface
     {
         return Collection::query()
             ->with(['loan', 'loan.customer', 'collector'])
+            ->when($bo->collectedBy !== null, fn ($q) => $q->where('collected_by', $bo->collectedBy))
             ->when($bo->loanId, fn($q) => $q->where('loan_id', $bo->loanId))
             ->when($bo->paymentMode, fn($q) => $q->where('payment_mode', $bo->paymentMode))
             ->latest('collected_at')

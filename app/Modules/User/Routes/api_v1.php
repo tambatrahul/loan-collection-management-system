@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([
     'auth:sanctum',
-    'role:admin',
+    'role:admin,agent',
 ])->group(function (): void {
     Route::apiResource('users', UserController::class);
 });

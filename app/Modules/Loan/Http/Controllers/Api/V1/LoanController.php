@@ -26,10 +26,14 @@ final class LoanController extends Controller
      */
     public function index(FetchLoanRequest $request): JsonResponse
     {
+        $user = $request->user();
+        $assignedTo = $user->role->name === 'ADMIN' ? null : $user->id;
+
         $bo = new FetchLoanBO(
             customerName: $request->validated('customer_name'),
             mobile: $request->validated('mobile'),
             status: $request->validated('status'),
+            assignedTo: $assignedTo
         );
 
         $perPage = PaginationHelper::getPerPage($request);
