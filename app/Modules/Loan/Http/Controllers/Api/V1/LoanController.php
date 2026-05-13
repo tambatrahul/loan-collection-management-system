@@ -56,7 +56,7 @@ final class LoanController extends Controller
         $user = $request->user();
 
         $bo = new CreateLoanBO(
-            loanNo: $this->generateLoanNumber(),
+            loanNo: null,
             customerId: (int) $request->validated('customer_id'),
             emiAmount: (float) $request->validated('emi_amount'),
             totalAmount: (float) $request->validated('total_amount'),
