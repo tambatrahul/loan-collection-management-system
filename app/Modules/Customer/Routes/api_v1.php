@@ -13,7 +13,7 @@ Route::prefix('customers')
             ->middleware('role:admin,agent');
 
         Route::post('/', [CustomerController::class, 'store'])
-            ->middleware('role:admin');
+            ->middleware('role:admin,agent');
 
         Route::put('/{id}', [CustomerController::class, 'update'])
             ->middleware('role:admin');

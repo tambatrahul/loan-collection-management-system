@@ -17,7 +17,7 @@ Route::prefix('loans')
 
         // Admin only
         Route::post('/', [LoanController::class, 'store'])
-            ->middleware('role:admin');
+            ->middleware('role:admin,agent');
 
         Route::put('/{id}', [LoanController::class, 'update'])
             ->middleware('role:admin');
